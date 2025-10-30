@@ -1,73 +1,45 @@
-def add(a, b):
-    """Возвращает сумму двух чисел."""
-    return a + b
+# 1. Нарушение PEP 8 (именование и пробелы)
+def ADD(x, y):
+    return x+y
 
+# 2. Нарушение PEP 8 (пробелы вокруг оператора) и неочевидное именование
+def subtract(a,b):
+    r = a - b # 3. Неочевидное именование переменной (r - что это?)
+    return r
 
-def subtract(a, b):
-    """Возвращает разность двух чисел."""
-    return a - b
-
-
+# 4. Избыточный код
 def multiply(a, b):
-    """Возвращает произведение двух чисел."""
-    return a * b
+    c = a * b
+    return c
 
-
+# 5. Потенциальная ошибка деления на ноль
 def divide(a, b):
-    """Возвращает результат деления a на b.
-    Обрабатывает ошибку деления на ноль.
-    """
-    if b == 0:
-        return "Ошибка: деление на ноль!"
     return a / b
 
+# 6. Магическое число в коде
+def check_result(result):
+    if result > 100: # Что означает 100?
+        print("Результат большой!")
+    return result
 
 def main():
-    """Основная функция, предоставляющая консольный интерфейс для калькулятора."""
-    print("Добро пожаловать в простой калькулятор!")
-    print("Доступные операции: +, -, *, /")
-    print("Для выхода введите 'exit'.")
+    print("Калькулятор")
+    # 7. Отсутствие обработки ошибок ввода (используем int вместо float, чтобы сломаться на дроби)
+    a = int(input("Первое число: "))
+    b = int(input("Второе число: "))
+    op = input("Операция (+, -, *, /): ")
 
-    while True:
-        user_input = input("\nВведите операцию (например, 5 + 3): ").strip()
+    if op == '+':
+        result = ADD(a, b)
+    elif op == '-':
+        result = subtract(a, b)
+    elif op == '*':
+        result = multiply(a, b)
+    elif op == '/':
+        result = divide(a, b)
 
-        if user_input.lower() == 'exit':
-            print("Выход из калькулятора.")
-            break
-
-        # Разбиваем ввод пользователя
-        parts = user_input.split()
-        if len(parts) != 3:
-            print("Ошибка: неверный формат. Используйте: <число> <операция> <число>")
-            continue
-
-        a_str, op, b_str = parts
-
-        # Пробуем преобразовать введенные данные в числа
-        try:
-            a = float(a_str)
-            b = float(b_str)
-        except ValueError:
-            print("Ошибка: оба операнда должны быть числами.")
-            continue
-
-        # Выполняем операцию в зависимости от введенного символа
-        result = None
-        if op == '+':
-            result = add(a, b)
-        elif op == '-':
-            result = subtract(a, b)
-        elif op == '*':
-            result = multiply(a, b)
-        elif op == '/':
-            result = divide(a, b)
-        else:
-            print(f"Ошибка: неизвестная операция '{op}'.")
-            continue
-
-        # Выводим результат
-        print(f"Результат: {result}")
-
+    result = check_result(result)
+    print("Ответ:", result)
 
 if __name__ == "__main__":
     main()
